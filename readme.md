@@ -1,11 +1,99 @@
 # Verschlüsseltes FileSystem mit DM-Crypt und LUKS
 
 
+## Vorbereitung und Software
+
+### Aufgabenstellung
+
+Beispielgebend für unterschiedliche Arten der Festplattenverschlüsselung wird DM-Crypt behandelt. DM-Crypt verschlüsselt Container/Partitionen und ist über virtuelles Blockdevice (/dev/mapper) ansprechbar, das als Filesystem gemountet werden kann. LUKS (Linux Unified Key Setup) dient dabei zum Schlüsselmanagement. Es ist daher DM-Crypt & LUKS in der vorgegebenen Slackware Distribution (VMware Image) einzukompilieren, zu konfigurieren und der Betrieb zu evaluieren. Im Zuge der Präsentation ist dies abschließend live vorzuführen.
+
+### Ablauf
+
+1. cryptsetup mit LUKS und Dependencies einkompilieren
+2. Kernel Einstellungen ändern und neuen Kernel kompilieren/erstellen
+3. Partition zu VM hinzufügen
+4. Verschlüsselung der Partition mit cryptsetup und LUKS
 
 
+### Software / Dependencies
 
+TODO:
+Dependencies Tree
 
+cryptsetup
+	- popt
+	- device mapper
+	
 
+## Theorie
+
+### Theoretische Grundlagen
+
+- Festplattenverschlüsselung
+- device Mapper
+	TODO
+- DM-crypt
+- LUKS
+
+## Installation
+
+### cryptsetup mit LUKS
+
+### Dependencies
+
+#### popt
+
+tar xf "Ausfüllen"
+cd "Ausfüllen"
+./configure --prefix=/usr
+make
+make install
+
+### device mapper
+
+tar xf "Ausfüllen"
+cd "Ausfüllen"
+./configure --prefix=/usr
+make
+make install
+
+## Konfiguration
+
+TODO: hab nicht wirklich was zum Konfigurieren außer Partition erstellen
+
+## Changelog - VMware-Image
+
+### Changelog
+
+tar upgedatet
+TODO:
+und andere
+
+### VMware
+
+#### Parition
+
+TODO: zeigen wie man eine Partition einfügt
+
+## Evaluierung / Testläufe
+
+### cryptsetup 
+
+TODO:
+Bens Idee ein Ablaufdiagramm
+Befehle auflisten, wie man eine eingefügte Partition mountet und verschlüsselt
+
+## Diskussion und eigene Bewertung 
+
+alte Slackware => alte cryptsetup Version, macht vieles leichter
+
+## Zusammenfassung
+
+TODO: kurze Zusammenfassung, na no na ned ^^
+
+## Quellen
+
+Links ^^
 
 
 
