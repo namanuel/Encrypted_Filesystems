@@ -1,3 +1,15 @@
+# Verschlüsseltes FileSystem mit DM-Crypt und LUKS
+
+
+
+
+
+
+
+
+
+
+
 # RE🌾ED
 
 notes about reverse engineering and exploit development
