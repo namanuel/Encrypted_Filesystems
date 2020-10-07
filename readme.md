@@ -49,13 +49,18 @@ Beispielgebend für unterschiedliche Arten der Festplattenverschlüsselung wird 
 
 ### Software / Dependencies
 
+---
 
 **Dependencies Tree**
+
+---
 
 <img src="media/dependenciestree.jpg"></img>
 	
 
 ## Theoretische Grundlagen
+
+---
 
 ### Festplattenverschlüsselung
 
@@ -121,6 +126,8 @@ Das führt dazu das LUKS leicht zu verwalten ist, aber eben auch gegenüber Drit
 
 ## Installation
 
+---
+
 ### cryptsetup mit LUKS
 
 ---
@@ -134,6 +141,8 @@ make install
 ```
 
 ### Dependencies
+
+---
 
 #### popt
 
@@ -194,7 +203,47 @@ make install
 
 #### Parition
 
-TODO: zeigen wie man eine Partition einfügt
+Für mein Beispiel muss eine extra Parition in VMBox zu der VM eingefügt werden
+
+1. 
+
+<img src="media/addpartition0.jpg"></img>
+
+2. 
+
+<img src="media/addpartition1.jpg"></img>
+
+3.
+
+<img src="media/addpartition2.jpg"></img>
+
+4.
+
+<img src="media/addpartition3.jpg"></img>
+
+5.
+
+<img src="media/addpartition4.jpg"></img>
+
+6.
+
+<img src="media/addpartition5.jpg"></img>
+
+7.
+
+<img src="media/addpartition6.jpg"></img>
+
+8. 
+
+<img src="media/addpartition7.jpg"></img>
+
+9.
+
+<img src="media/addpartition8.jpg"></img>
+
+10.
+
+<img src="media/addpartition9.jpg"></img>
 
 ## Evaluierung / Testläufe
 
