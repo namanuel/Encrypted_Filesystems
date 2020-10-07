@@ -205,43 +205,40 @@ make install
 
 Für mein Beispiel muss eine extra Parition in VMBox zu der VM eingefügt werden
 
-1. 
+1. Zuerst muss man in VirutalBox in den Virutal Media Manager rein, auch mit STRG+D möglich.
 
 <img src="media/addpartition0.jpg"></img>
 
-2. 
+2. Im Virtual Media Manager wählt man dann ein neues Medium erstellen aus, siehe Bild 2
 
 <img src="media/addpartition1.jpg"></img>
 
-3.
+3. In Bild 3 und 4 die ausgewählten Optionen lassen und weitergehen.
 
 <img src="media/addpartition2.jpg"></img>
-
-4.
-
 <img src="media/addpartition3.jpg"></img>
 
-5.
+4. Im nächsten Schritt kann man den Namen und die Größe der Partition einstellen, in dem Beispiel hab ich alles auf Standard gelassen
 
 <img src="media/addpartition4.jpg"></img>
 
-6.
+5. Im Virtual Media Manager sieht man die neu erstellte Partition
 
 <img src="media/addpartition5.jpg"></img>
 
-7.
+6. Jetzt muss die neu erstellte Parition noch der VM hinzugefügt werden, dazu geht man in die Settings der gewünschten VM
 
 <img src="media/addpartition6.jpg"></img>
 
-8. 
+7. In dem Reiter Storage kann dann dem schon vorhandenen `Controller: IDE` eine neue Disk hinzugefügt werden, es ist wichtig in den schon vorhandenen Controller einzubinden, da die Partition sonst nicht gefunden wird bzw. wurde.
 
 <img src="media/addpartition7.jpg"></img>
 
-9.
+8. Falls die Disk noch nirgends hinzugefügt worden ist, ist sie ganz unten in der Liste unter `Not Attached` aufgelistet
 
 <img src="media/addpartition8.jpg"></img>
 
-10.
+10. Die Partition wurde erfolgreich der VM hinzugefügt
 
 <img src="media/addpartition9.jpg"></img>
 
