@@ -49,9 +49,7 @@ Beispielgebend für unterschiedliche Arten der Festplattenverschlüsselung wird 
 
 ### Software / Dependencies
 
----
-
-**Dependencies Tree**
+#### Dependencies Tree
 
 ---
 
@@ -59,8 +57,6 @@ Beispielgebend für unterschiedliche Arten der Festplattenverschlüsselung wird 
 	
 
 ## Theoretische Grundlagen
-
----
 
 ### Festplattenverschlüsselung
 
@@ -125,8 +121,6 @@ Das führt dazu das LUKS leicht zu verwalten ist, aber eben auch gegenüber Drit
 
 
 ## Installation
-
----
 
 ### cryptsetup mit LUKS
 
@@ -238,19 +232,162 @@ Für mein Beispiel muss eine extra Parition in VMBox zu der VM eingefügt werden
 
 <img src="media/addpartition8.jpg"></img>
 
-10. Die Partition wurde erfolgreich der VM hinzugefügt
+9. Die Partition wurde erfolgreich der VM hinzugefügt
 
 <img src="media/addpartition9.jpg"></img>
 
-## Evaluierung / Testläufe
+## Evaluierung / Beispiel
 
-### cryptsetup 
+### How to use cryptsetup 
 
-TODO:
-Bens Idee ein Ablaufdiagramm
-Befehle auflisten, wie man eine eingefügte Partition mountet und verschlüsselt
+---
+
+#### Konfigurieren einer LUKS Partition
+
+---
+
+Zuerst wird die zuvor eingefügte Partition gesucht mit dem Befehl
+
+`fdisk -l`
+
+TODO: Bild der Ausgabe
+
+wenn die Partition gefunden wurde, wird sie in mit dem Befehl konfiguriert
+
+`cryptsetup -y -v luksFormat /dev/hdb1`
+
+TODO: Bild der Ausgabe
+
+-y = zweimal das Passwort eingeben (doppelcheck)
+-v = verbose
+
+Inizialisiert das Volume und setzt einen ersten Schlüssel oder Passwort
+der Schlüssel kann nicht wieder hergestellt werden, also nicht vergessen, 
+um typos zu verhindern nehme ich ein besonders leichtes Passwort!
+
+`cryptsetup luksOpen /dev/hdb1 crypto`
+
+TODO: Bild der Ausgabe
+
+**PW Hallo**
+
+wenn der Schlüssel erfolgreich verifiziert worden ist können wir mit folgendem Befehl sehen,
+ob luksFormat gemapped worden ist
+
+`ls -l /dev/mapper/crypto`
+
+TODO: Bild der Ausgabe
+
+um den Status auszugeben nehmen wir folgenden Befehl
+
+`cryptsetup -v status crypto`
+
+TODO: Bild der Ausgabe
+
+mit dem luksDump Befehl wird der LUKS header dargestellt
+
+`cryptsetup luksDump /dev/hdb1`
+
+TODO: Bild der Ausgabe
+
+#### Format Linux LUKS partition
+
+---
+
+Zuerst müssen wir "NULLER" auf unser encryptetes Gerät schreiben. Das machen wir um 
+
+Zuerst müssen Sie Nullen in das verschlüsselte Gerät / dev / mapper / backup2 schreiben. 
+Dadurch werden Blockdaten mit Nullen zugewiesen. Dies stellt sicher, 
+dass die Außenwelt dies als zufällige Daten betrachtet, d. H. Es schützt vor der Offenlegung von Nutzungsmustern
+kann ewig dauern
+
+`dd if=/dev/zero of=/dev/mapper/crypto`
+
+TODO: Bild der Ausgabe
+
+
+Als nächstes erstellen wir ein Filesystem, wir verwenden reiserfs (bzw. killerfs), 
+weil die anderen Format nicht unterstützt werden
+
+`mkfs.reiserfs /dev/mapper/crypto`
+
+TODO: Bild der Ausgabe
+
+der nächste Schritt ist, das Volume zu mounten um darauf zugreifen zu können, 
+die Schritte gehe ich jetzt schneller durch
+
+```mkdir /mnt/cryptomount
+mount /dev/mapper/crypto /mnt/cryptomount
+df -H
+cd /mnt/cryptomount
+ls -l
+```
+
+TODO: Bild der Ausgabe und was ich damit bewirke
+
+#### Unmount und Daten sichern
+
+---
+
+um die Daten zu sichern, muss das Volume zuerst unmountet werden und dann mit luksClose gesichert
+
+`umount /mnt/cryptomount`
+
+`cryptsetup luksClose crypto`
+
+TODO: Bild der Ausgabe
+
+#### remount die encrypte Partition
+
+---
+
+davor kann man nochmal schauen ob sie gemountet ist
+
+`df -H`
+
+danach wieder entcrypten und mounten:
+
+```cryptsetup luksOpen /dev/hdb1 crypto
+mount /dev/mapper/crypto /mnt/cryptomount
+df -H
+```
+
+TODO: Bild der Ausgabe
+
+mount => anschauen was ich damit bezwecke ^^, type wird angezeigt => reiserfs
+
+#### Schlüssel hinzufügen
+
+---
+
+um weitere Schlüssel hinzufügen machen, verwenden wir folgenden Befehl:
+
+`cryptsetup luksDump /dev/hdb1`
+
+TODO: Bild der Ausgabe
+
+`cryptsetup luksAddKey /dev/hdb1`
+
+TODO: Bild der Ausgabe
+
+1. aktuelles Passwort eingeben
+2. anderes Passwort eingeben (Test123)
+
+`cryptsetup luksDump /dev/hdb1`
+
+TODO: Bild der Ausgabe
+
+#### Schlüssel löschen
+
+---
+
+`cryptsetup luksRemoveKey /dev/hdb1`
+
+TODO: Bild der Ausgabe
 
 ## Diskussion und eigene Bewertung 
+
+
 
 alte Slackware => alte cryptsetup Version, macht vieles leichter
 
