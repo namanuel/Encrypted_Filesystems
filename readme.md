@@ -1,4 +1,4 @@
-# Verschlüsseltes FileSystem mit DM-Crypt und LUKS
+# Verschlüsseltes FileSystem mit DM-Crypt und LUKS 🍹
 
 # Inhaltsverzeichnis
 
