@@ -9,7 +9,10 @@
   * [Ablauf](#ablauf)
   * [Software / Dependencies](#software--dependencies)
 * [Theorie](#theorie)
-  * [Theoretische Grundlagen](#theoretische-grundlagen)
+  * [Festplattenverschlüsselung](#Festplattenverschlüsselung)
+  * [Device Mapper](#Device Mapper)
+  * [DM-Crypt](#DM-Crypt)
+  * [LUKS](#LUKS)
 * [Installation](#installation)
   * [cryptsetup mit LUKS](#cryptsetup-mit-luks)
   * [Dependencies](#dependencies)
@@ -55,9 +58,9 @@ Beispielgebend für unterschiedliche Arten der Festplattenverschlüsselung wird 
 
 ## Theorie
 
-### Theoretische Grundlagen
+### Festplattenverschlüsselung
 
-#### Festplattenverschlüsselung
+---
 
 Allgemein unter Festplattenverschlüsselung bzw. verschlüsselt Filesystem versteht man das Verschlüsseln einer Festplatte oder einer einzelnen Partition, um den unbefugten Zugriff auf sensible Daten zu verhindern.
 Wichtig ist das die zum Booten verwendeten Daten unverschlüsselt bleiben da man sonst einen speziellen Bootmanager braucht zum Entschlüsseln braucht.
@@ -67,29 +70,55 @@ Meistens werden die Festplatten mit einem Passworts verschlüsselst, es gibt abe
 Durch den Zusätzlichen Rechenaufwand der Verschlüsselungsalgorithmen kann es zu Performanceinbüßungen kommen, der Datendurchsatz sinkt gegenüber unverschlüsselter Datenträger.
 Eine Lösung wäre es einen schnelleren Prozessor zu verwenden oder durch die Verwendung von vorher genannten Hardware wie Security Token.
 
+Es gibt verschiedene Softwaren für die unterschiedlichen Betriebssyteme um die Festplatte zu verschlüsseln:
+
 - Windows: Bitlocker
 - Linux: Loop-AES und DM-Crypt mit LUKS
 - macOS: FileVault
 
----
-
-#### device Mapper
 
 
+### Device Mapper
 
 ---
 
-#### DM-crypt
+Der Device Mapper wird hauptsächlich für den Logical Volume Manager (LVM) und für Geräteverschlüsselung verwendet. 
+Er erlaubt die Erzeugung virtueller blockorientierter Geräte, indem er deren Adressbereich auf andere blockorientierte Geräte oder spezielle Funktionen abbildet.
+Blockorientierte Geräte übertragen Daten in Blöcken und werden oft für die parallele Datenübertragung genutzt.
 
 
+### DM-crypt
+
+---
+
+DM-Crypt ist ein Kryptografie Modul des Device Mappers im Linux Kernel. 
+
+
+Es können verschiedene Algorithmen verwendet werden, wie z.B.:
+- Mehrere aes versionen
+	- aes-cbc-essiv:sha256 
+	- aes-xts-plain64 
+	- aes:64-cbc-lmk 
+- Twofish
+- Serpent
+
+Mit dm crypt können wir mit dem verschiedenen Algorithmen unsere Daten ver- und entschlüsseln, das kann man auf beliebige Gerätedateien anwenden, meisten auf Paritionen, Festplatten oder logischen Laufwerken. 
+
+Es wird eine zusätzliche Schicht zwischen verschlüsselten Rohdaten und dem Dateisystem aufgebaut. Für den Benutzer ist der Prozess vollkommen Transparent, deshalb wird es oft für die Festplattenverschlüsselung verwendet. 
+
+
+### LUKS
 
 ---
 
-#### LUKS
+LUKS steht für Linux Unified Key Setup.
 
+Erweitert die verschlüsselte Datei um eine Header datei, in dem Metadaten sowie bis zu acht Schlüssel gespeichert werden
+Zusätzlich kann mit der Hilfe von LUKS der Schlüssel bzw. Einer der acht Schlüsseln jederzeit geändert oder gelöscht warden, ohne die verschlüsselten Daten neu umschreiben zu müssen.
 
+Ein Nachteil von LUKS ist, dass im Header stehen ziemlich viele Informationen z.b. eine Klartextkennung, den verwendeten Verschlüsselungs- und Hash-Algorithmus und die Größe des Masterschlüssels.
+Das führt dazu das LUKS leicht zu verwalten ist, aber eben auch gegenüber Dritte oder Angreiferprogramme leicht erkennbar ist.
 
----
 
 ## Installation
 
