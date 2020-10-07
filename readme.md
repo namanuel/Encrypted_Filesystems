@@ -8,17 +8,16 @@
   * [Aufgabenstellung](#aufgabenstellung)
   * [Ablauf](#ablauf)
   * [Software / Dependencies](#software--dependencies)
-* [Theorie](#theorie)
-  * [Festplattenverschlüsselung](#Festplattenverschlüsselung)
-  * [Device Mapper](#Device Mapper)
-  * [DM-Crypt](#DM-Crypt)
-  * [LUKS](#LUKS)
+* [Theoretische Grundlagen](#theoretische-grundlagen)
+  * [Festplattenverschlüsselung](#festplattenverschlüsselung)
+  * [Device Mapper](#device-mapper)
+  * [DM-Crypt](#dm-crypt)
+  * [LUKS](#luks)
 * [Installation](#installation)
   * [cryptsetup mit LUKS](#cryptsetup-mit-luks)
   * [Dependencies](#dependencies)
     * [popt](#popt)
   	* [device mapper](#device-mapper)
-* [Konfiguration](#konfiguration)
 * [Changelog - VMware-Image](#changelog---vmware-image)
   * [Changelog](#changelog)
   * [VMware](#vmware)
@@ -56,7 +55,7 @@ Beispielgebend für unterschiedliche Arten der Festplattenverschlüsselung wird 
 <img src="media/dependenciestree.jpg"></img>
 	
 
-## Theorie
+## Theoretische Grundlagen
 
 ### Festplattenverschlüsselung
 
@@ -124,6 +123,8 @@ Das führt dazu das LUKS leicht zu verwalten ist, aber eben auch gegenüber Drit
 
 ### cryptsetup mit LUKS
 
+---
+
 ```
 tar xf cryptsetup-luks-1.0.4.tar.gz
 cd cryptsetup-luks-1.0.4
@@ -136,6 +137,8 @@ make install
 
 #### popt
 
+---
+
 ```
 tar xf popt-1.18.tar.gz
 cd popt-1.18
@@ -146,6 +149,8 @@ make install
 
 ### device mapper
 
+---
+
 ```
 tar xf device-mapper.1.02.28.tar.gz
 cd device-mapper.1.02.28
@@ -154,17 +159,36 @@ make
 make install
 ```
 
-## Konfiguration
-
-TODO: hab nicht wirklich was zum Konfigurieren außer Partition erstellen
-
 ## Changelog - VMware-Image
 
 ### Changelog
 
-tar upgedatet
-TODO:
-und andere
+Bei meinen vielen Versuchen `cryptsetup` zum Laufen zu bringen, habe ich die neueste Version von `tar` mit den `utils xz` einkompiliert.
+
+#### tar
+
+---
+
+```
+tar xf tar-latest.tar.gz
+cd tar-latest
+./configure --prefix=/usr
+make
+make install
+```
+
+#### utils xz
+
+---
+
+```
+tar xf xz-5.2.5.tar.gz
+cd xz-5.2.5
+./configure --prefix=/usr
+make
+make install
+```
+
 
 ### VMware
 
