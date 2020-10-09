@@ -250,16 +250,13 @@ Zuerst wird die zuvor eingefügte Partition gesucht mit dem Befehl
 
 `fdisk -l`
 
-TODO: Bild der Ausgabe
+<img src="media/cryptsetup0.jpg"></img>
 
 wenn die Partition gefunden wurde, wird sie in mit dem Befehl konfiguriert
 
 `cryptsetup -y -v luksFormat /dev/hdb1`
 
-TODO: Bild der Ausgabe
-
--y = zweimal das Passwort eingeben (doppelcheck)
--v = verbose
+<img src="media/cryptsetup1.jpg"></img>
 
 Inizialisiert das Volume und setzt einen ersten Schlüssel oder Passwort
 der Schlüssel kann nicht wieder hergestellt werden, also nicht vergessen, 
@@ -267,7 +264,7 @@ um typos zu verhindern nehme ich ein besonders leichtes Passwort!
 
 `cryptsetup luksOpen /dev/hdb1 crypto`
 
-TODO: Bild der Ausgabe
+<img src="media/cryptsetup2.jpg"></img>
 
 **PW Hallo**
 
@@ -276,19 +273,19 @@ ob luksFormat gemapped worden ist
 
 `ls -l /dev/mapper/crypto`
 
-TODO: Bild der Ausgabe
+<img src="media/cryptsetup3.jpg"></img>
 
 um den Status auszugeben nehmen wir folgenden Befehl
 
 `cryptsetup -v status crypto`
 
-TODO: Bild der Ausgabe
+<img src="media/cryptsetup4.jpg"></img>
 
 mit dem luksDump Befehl wird der LUKS header dargestellt
 
 `cryptsetup luksDump /dev/hdb1`
 
-TODO: Bild der Ausgabe
+<img src="media/cryptsetup5.jpg"></img>
 
 #### Format Linux LUKS partition
 
@@ -303,7 +300,7 @@ kann ewig dauern
 
 `dd if=/dev/zero of=/dev/mapper/crypto`
 
-TODO: Bild der Ausgabe
+<img src="media/cryptsetup6.jpg"></img>
 
 
 Als nächstes erstellen wir ein Filesystem, wir verwenden reiserfs (bzw. killerfs), 
@@ -311,7 +308,7 @@ weil die anderen Format nicht unterstützt werden
 
 `mkfs.reiserfs /dev/mapper/crypto`
 
-TODO: Bild der Ausgabe
+<img src="media/cryptsetup7.jpg"></img>
 
 der nächste Schritt ist, das Volume zu mounten um darauf zugreifen zu können, 
 die Schritte gehe ich jetzt schneller durch
@@ -323,7 +320,11 @@ cd /mnt/cryptomount
 ls -l
 ```
 
-TODO: Bild der Ausgabe und was ich damit bewirke
+<img src="media/cryptsetup8.jpg"></img>
+
+Zusätzlich wurde ein testfile erstellt
+
+<img src="media/cryptsetup9.jpg"></img>
 
 #### Unmount und Daten sichern
 
@@ -335,7 +336,6 @@ um die Daten zu sichern, muss das Volume zuerst unmountet werden und dann mit lu
 
 `cryptsetup luksClose crypto`
 
-TODO: Bild der Ausgabe
 
 #### remount die encrypte Partition
 
@@ -352,8 +352,6 @@ mount /dev/mapper/crypto /mnt/cryptomount
 df -H
 ```
 
-TODO: Bild der Ausgabe
-
 mount => anschauen was ich damit bezwecke ^^, type wird angezeigt => reiserfs
 
 #### Schlüssel hinzufügen
@@ -364,26 +362,19 @@ um weitere Schlüssel hinzufügen machen, verwenden wir folgenden Befehl:
 
 `cryptsetup luksDump /dev/hdb1`
 
-TODO: Bild der Ausgabe
+<img src="media/cryptsetup5.jpg"></img>
 
 `cryptsetup luksAddKey /dev/hdb1`
 
-TODO: Bild der Ausgabe
+<img src="media/cryptsetup10.jpg"></img>
 
 1. aktuelles Passwort eingeben
 2. anderes Passwort eingeben (Test123)
 
 `cryptsetup luksDump /dev/hdb1`
 
-TODO: Bild der Ausgabe
+<img src="media/cryptsetup11.jpg"></img>
 
-#### Schlüssel löschen
-
----
-
-`cryptsetup luksRemoveKey /dev/hdb1`
-
-TODO: Bild der Ausgabe
 
 ## Diskussion und eigene Bewertung 
 
