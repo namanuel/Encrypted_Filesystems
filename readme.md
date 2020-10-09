@@ -162,7 +162,7 @@ make
 make install
 ```
 
-## Changelog - VMware-Image
+## Changelog - Kernel - VMware-Image
 
 ### Changelog
 
@@ -191,7 +191,63 @@ cd xz-5.2.5
 make
 make install
 ```
+### Kernel
 
+Um den Kernel zu konfigurieren bzw. Module hinzuzufügen wird folgendes Command verwendet.
+
+
+```cd /usr/src/linux
+make menuconfig
+```
+
+<img src="media/kernelchange0.PNG"></img>
+
+
+Im Abschnitt `Device Drivers` im Unterabschnitt `Multi-device support (RAID and LVM)`
+
+<img src="media/kernelchange1.PNG"></img>
+
+sind folgende Einstellungen konfiguriert und Module aktiviert worden.
+
+<img src="media/kernelchange2.PNG"></img>
+
+Zusätzlich können im Abschnitt `Cryptographic options` folgende Module aktiviert werden.
+
+<img src="media/kernelchange3.PNG"></img>
+
+folgende Module aktiviert werden.
+
+<img src="media/kernelchange4.PNG"></img>
+
+Ist das erledigt geht man auf Exit und Speichern.
+
+Danach muss der neue Kernel erstellt werden und alle Module aktiviert.
+
+```make bzImage
+make modules
+make modules_install
+```
+Im Ordner `arch/i386/boot` ist dann das Image `bzImage` zu finden.
+
+Das `bzImage` muss dann in den `/boot/` Ordner kopiert oder verschoben werden.
+
+Jetzt muss noch die `lilo.conf` Datei aktualisiert werden.
+
+`vi /etc/lilo.conf` und folgende Werte müssen hinzugefügt werden:
+
+```image = /boot/bzImage
+root = /dev/hda2
+label = Beliebiger_Name
+read-only
+```
+
+Nach der Aktualisierung muss lilo noch ausgeführt werden `lilo`.
+
+Danach die VM mit `reboot` neustarten.
+
+Beim Start sieht man jetzt zwei Kernel zum Auswählen.
+
+<img src="media/kernelchange5.PNG"></img>
 
 ### VMware
 
@@ -351,8 +407,6 @@ danach wieder entcrypten und mounten:
 mount /dev/mapper/crypto /mnt/cryptomount
 df -H
 ```
-
-mount => anschauen was ich damit bezwecke ^^, type wird angezeigt => reiserfs
 
 #### Schlüssel hinzufügen
 
